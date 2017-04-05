@@ -34,6 +34,7 @@ void setup() {
   toggleLED();
 
   // Create TCP connection
+  client.setNoDelay(true);
   if (!client.connect(host_addr, host_port)) {
     Serial.println("connection failed");
     digitalWrite(led, HIGH);
