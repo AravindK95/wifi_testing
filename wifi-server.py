@@ -1,9 +1,11 @@
 import sys
 import socket
 
-server_address = ("", 8888)
+DATA_STRING = "The Quick Brown Fox Jumped Over The Lazy Dog.\n"
 
-def main():
+def run_server(portnum=8888):
+  server_address = ("", portnum)
+
   # create socket
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
   sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -25,14 +27,7 @@ def main():
 
       try:
         while True:
-          data = connection.recv(4096)
-
-          if data:
-            print("Echoing data (" + str(counter) + "): " + str(data))
-            counter += 1
-            connection.sendall(data)
-          else:
-            break
+          connection.sendall(DATA_STRING)
 
       finally:
         print("Closing connection")
@@ -43,5 +38,7 @@ def main():
     sock.close()
 
 if __name__ == "__main__":
-  main()
-
+  if len(sys.argv) == 2:
+    run_server(int(sys.argv[1]))
+  else:
+    print("Usage:\tpython wifi-server.py PORT_NUMBER")
