@@ -46,11 +46,9 @@ void setup() {
 
 void loop() {
   // send data to be echoed
-//  Serial.println("Sending data...");
-  client.print(DATA_STRING);
+  // client.print(DATA_STRING);
 
   // wait for response until timeout
-//  Serial.println("Waiting for response...");
   unsigned long timeout = millis();
   while (client.available() == 0) {
     if (millis() - timeout > 5000) {
@@ -61,15 +59,12 @@ void loop() {
   }
 
   // receive and print data
-//  Serial.println("Received response:\n");
   while (client.available()) {
     String rx_string = client.readStringUntil('\n');
-//    Serial.print(rx_string);
   }
 
   delay(0);       // resets watchdog
   toggleLED();
-//  Serial.println("--------------\n\n\n");
 }
 
 void toggleLED() {
